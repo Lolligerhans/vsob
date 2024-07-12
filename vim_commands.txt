@@ -1,2 +1,6 @@
-:s/^/\=printf('#%04d', line('.')).' ┃ '/
+" Add names
 :s/^.\{-}{ \(.\{-}\) —.*$/\1 ┃ \0/
+" Add line numbers
+:s/^/\=printf('#%04d', line('.')).' ┃ '/
+" Add game numbers
+:s/\#0*\(\d\{-}\) \zs/\=printf('(♚ %04d ♔ %04d) ', submatch(1) * 2 - 1, submatch(1) * 2)/
