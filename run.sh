@@ -33,10 +33,10 @@ satisfy_version "$dotfiles/scripts/boilerplate.sh" "0.0.0"
 # ✔ Source versioned dependencies with load_version
 load_version "$dotfiles/scripts/version.sh" "0.0.0"
 #load_version "$dotfiles/scripts/assert.sh"
-#load_version "$dotfiles/scripts/bash_meta.sh"
+load_version "$dotfiles/scripts/bash_meta.sh" "0.0.0"
 #load_version "$dotfiles/scripts/cache.sh"
 #load_version "$dotfiles/scripts/error_handling.sh"
-#load_version "$dotfiles/scripts/fileinteracts.sh"
+load_version "$dotfiles/scripts/fileinteracts.sh" "0.0.0"
 #load_version "$dotfiles/scripts/git_utils.sh"
 #load_version "$dotfiles/scripts/progress_bar.sh"
 #load_version "$dotfiles/scripts/nyx/nyx.sh"
@@ -48,6 +48,8 @@ load_version "$dotfiles/scripts/version.sh" "0.0.0"
 # │ 🗺 Globals           │
 # ╰──────────────────────╯
 
+declare -r reorder_script="reorder_openings.py"
+declare -r temp_dir="./temp/"
 declare -r venv_dir="venv"
 
 # ╭──────────────────────╮
@@ -56,8 +58,7 @@ declare -r venv_dir="venv"
 
 # Default command (when no arguments are given)
 command_default() {
-  echo "Not implemented yet"
-
+  subcommand combine "vsob28/vsob27_original.pgn" "vsob28/vsob28_subs.pgn"
 }
 
 command_ensure_environment() {
@@ -75,6 +76,49 @@ command_ensure_environment() {
   echon "pip3 install chess"
   echon "..."
   echon "deactivate"
+
+  echok "venv ready"
+}
+
+command_combine() {
+  set_args "--help --" "$@"
+  eval "$get_args"
+
+  echoi "Input files:"
+  show_variable argv
+  ensure_directory "${temp_dir}"
+
+  # The combiner script expects this exact name so we hardcode it
+  declare -r input_filename="combined_input.pgn"
+  declare -r output_filename="combined_output.pgn"
+  command touch -- "./${temp_dir}/${input_filename}"
+  command truncate -s 0 -- "./${temp_dir}/${input_filename}"
+
+  # Join files
+  declare f=""
+  for f in "${argv[@]}"; do
+    echoi "In: $(wc -l "$f") lines"
+    command cat -- "${f}" >>"./${temp_dir}/${input_filename}"
+  done
+  echoi "Combined: $(wc -l "./${temp_dir}/${input_filename}")"
+
+  # The reordering script uses harcoded input/output file names
+  {
+    pushd "${temp_dir}" || return 1
+    if [[ -f "./$output_filename" ]]; then
+      command rm -v -- "./$output_filename"
+    fi
+    print_and_execute command python3 -- "../${reorder_script}"
+    # Sanity check
+    if [[ ! -f "./$output_filename" ]]; then
+      errchoe "Expected output file $text_user_soft$output_filename$text_normal not found"
+      return 1
+    fi
+    popd || return 1
+  }
+
+  echoi "Output: $temp_dir/$output_filename"
+  echok "Combined PGNs"
 }
 
 # ╭──────────────────────╮
@@ -86,7 +130,23 @@ command_ensure_environment() {
 # ╭──────────────────────╮
 # │ 🖹 Help strings       │
 # ╰──────────────────────╯
-declare -r ensure_environment_help_string='Create venv if missing'
+declare -r ensurejsut_environment_help_string='Create venv if missing'
+declare -r combine_help_string='Generate combined PGN
+DESCRIPTION
+  Uses the TCEC discord #bonus-arena combiner script. It works on text-files so
+  is not very safe.
+
+  This command will concat inputs into a temporary file and invoke the reordering
+  script on the result.
+
+  Inputs are relative paths (because we prefix ../ from a different directory).
+SYNOPSIS
+  combine -- ./file1 ./file2
+  combine -- ./file1 ./file2 ...
+  combine --help
+OPTIONS
+  --help: Show this help
+'
 # ╭──────────────────────╮
 # │ ⚙ Boilerplate        │
 # ╰──────────────────────╯
