@@ -17,35 +17,41 @@ Per game:
 
 ## Processing steps
 
-1. Remove obsolete lines
-    - empty lines
-    - PGN metadata: `[Event]`, `[Date]`
+1. Remove empty lines
 2. Join games into single lines
-    - excluding the deleted metadata, all entries begin with `/^1\./`
-3. Add data into greppable columns at the start of each line
+1. Remove PGN metadata for readability
+1. Add data into greppable columns at the start of each line
 
 > [!TIP]
 > Below are (n)vim commands. Yank line into `"0` by `yy` and apply with `@0`.
 
-### Remove obsolete lines
+### Remove empty lines
 
 ```vim
 :g/^$/d
+" Deprecated: Needed for joining"
 :g/\V\^[/d
 ```
 
 ### Join lines
 
-Some lines in VSOB28 did not start with `/^1\./` but with a range like `89-90`.
-Probably and accident. Maybe the indices of white/black opening? Removing all
-instances by hand, found by verifying that all lines start with `1.` after
-joining.
-
-The join command greps for a `1.` at the start of a line until the next `} *` at
-the end of a line and joins all these lines.
+Add a single empty line at the end beforehand.
 
 ```vim
+" Deprecated: Pattern not guaranteed
 :g/^1\./;/\} \*$/join
+" Join by grepping for '[Event'. Needs an empty line at end of file.
+:g/^\[Event/;/^\[Event\|\%$/-1join
+" Sanity check
+:v/^\[Event/p
+```
+
+### Remove metadata
+
+```vim
+" Remove PGN metadata
+:%s/\[.\{-}\]\s*//gp
+" Sanity check
 :v/^1\./p
 ```
 
@@ -56,7 +62,7 @@ numbers.
 
 1. Line numbers are formatted to make them sort correctly lexicographically. Long
 enough that all values start with digit 0, resulting in `#0` at the start.
-1. Names are grepped to be between the first `{` and the non-ASCII character `—`. Conversion to lower case ensures consistent sorting between different upper/lower case spelligns of the same names.
+1. Names are grepped to be between the first `{` and the non-ASCII character `—`. Conversion to lower case ensures consistent sorting between different upper/lower case spellings of the same names.
 1. Game numbers grep for `#0` from line numbers.
 
 ```vim
