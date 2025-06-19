@@ -58,7 +58,10 @@ declare -r venv_dir="venv"
 
 # Default command (when no arguments are given)
 command_default() {
-  subcommand combine "vsob28/vsob27_original.pgn" "vsob28/vsob28_subs.pgn"
+  declare -r debug=""
+
+  # shellcheck disable=SC2086 # No quoting around $debug
+  subcommand combine $debug -- "vsob28/vsob27_original.pgn" "vsob28/vsob28_subs.pgn"
 }
 
 command_ensure_environment() {
@@ -81,7 +84,7 @@ command_ensure_environment() {
 }
 
 command_combine() {
-  set_args "--help --" "$@"
+  set_args "--debug --help --" "$@"
   eval "$get_args"
 
   echoi "Input files:"
@@ -101,6 +104,10 @@ command_combine() {
     command cat -- "${f}" >>"./${temp_dir}/${input_filename}"
   done
   echoi "Combined: $(wc -l "./${temp_dir}/${input_filename}")"
+
+  if [[ "$debug" == "true" ]]; then
+    command batcat "$temp_dir/$input_filename"
+  fi
 
   # The reordering script uses harcoded input/output file names
   {
@@ -130,7 +137,7 @@ command_combine() {
 # ╭──────────────────────╮
 # │ 🖹 Help strings       │
 # ╰──────────────────────╯
-declare -r ensurejsut_environment_help_string='Create venv if missing'
+declare -r ensure_environment_help_string='Create venv if missing'
 declare -r combine_help_string='Generate combined PGN
 DESCRIPTION
   Uses the TCEC discord #bonus-arena combiner script. It works on text-files so
@@ -142,9 +149,11 @@ DESCRIPTION
   Inputs are relative paths (because we prefix ../ from a different directory).
 SYNOPSIS
   combine -- ./file1 ./file2
-  combine -- ./file1 ./file2 ...
+  combine --debug -- ./file1 ./file2
+  combine -- ./file1 ./file2 ./file3 ./file4 ...
   combine --help
 OPTIONS
+  --debug: Enable additional debug printing
   --help: Show this help
 '
 # ╭──────────────────────╮
