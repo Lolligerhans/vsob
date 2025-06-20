@@ -65,8 +65,9 @@ New for TCEC! dbcn: +0.38
 3 lichess games
 
 wv=0.5, wdl=109 878 13, mt=303476, n=157497371, d=40, pv=4. Be3 e6 5. c4 Be7 6. Nc3 O-O 7. Be2 b5 8. cxb5 axb5 9. Bxb5 c6 10. Bd3 Qb6 11. Qd2 d5 12. Nge2 dxe4 13. Nxe4 Nbd7 14. O-O Ba6 15. Bxa6 Qxa6 16. N2c3 Rfb8 17. Bf2 Nd5 18. Rfc1 N7b6 19. b3 Ba3 20. Rd1 Nxc3 21. Qxc3 Nd5 22. Qc2 Nb4 23. Qc4 Qxc4 24. bxc4 } *
-
 ```
+
+</details>
 
 Relevant structure
 
@@ -102,8 +103,6 @@ Relevant structure
 ```vim
 :g/^$/d
 ```
-
-</details>
 
 ### Join lines
 
