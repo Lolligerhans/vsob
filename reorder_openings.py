@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 """
-- Input: 'combined_input.pgn' line-wise concatenation of some .pgn files
-- Outptu: 'combined_output.pgn' sorted by number of openings from each author
+- Input : 'combined_input.pgn'  line-wise concatenation of some .pgn files
+- Output: 'combined_output.pgn' sorted by number of openings from each author
 """
 
 import chess
@@ -17,14 +17,7 @@ with open("combined_output.pgn", "w") as fp_out:
     author_dict = {}
     author_no = 0
     game_lst = []
-    """Original version failed to parse
-    for game in open("combined_input.pgn").read().split(split_str):
-        if not game:
-            continue
-        game = split_str + game
-    """
-    while(True):
-        # python-chess object
+    while True:
         game_obj = chess.pgn.read_game(pgn)
         if game_obj == None:
             break
@@ -33,7 +26,9 @@ with open("combined_output.pgn", "w") as fp_out:
 
         # When no { is found there is no author
         index = word_split.index("{") if "{" in word_split else -1
-        author = word_split[word_split.index("{") + 1] if index != -1 else "unknown_author"
+        author = (
+            word_split[word_split.index("{") + 1] if index != -1 else "unknown_author"
+        )
         if author not in author_dict.keys():
             author_dict[author] = author_no
             author_no += 1
