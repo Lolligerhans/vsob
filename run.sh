@@ -4,7 +4,7 @@
 # ╰──────────────────────╯
 # version 0.0.0
 # ╭──────────────────────╮
-# │ 🛈 Info               │
+# │ 🛈 Info              │
 # ╰──────────────────────╯
 # TODO: This is a template runscript.
 # ╭──────────────────────╮
@@ -26,7 +26,7 @@ _run_config["versioning"]=0   # {0, 1}
 _run_config["log_loads"]=0    # {0, 1}
 _run_config["error_frames"]=4 # {1, 2, ...}
 # ╭──────────────────────╮
-# │ 🗀 Dependencies       │
+# │ 🗀 Dependencies      │
 # ╰──────────────────────╯
 # ✔ Ensure versions with satisfy_version
 satisfy_version "$dotfiles/scripts/boilerplate.sh" "0.0.0"
@@ -59,9 +59,11 @@ declare -r venv_dir="venv"
 # Default command (when no arguments are given)
 command_default() {
   declare -r debug=""
+  declare -r in1="vsob28/vsob28_original.pgn"
+  declare -r in2="vsobX/original.pgn"
 
   # shellcheck disable=SC2086 # No quoting around $debug
-  subcommand combine $debug -- "vsob28/vsob27_original.pgn" "vsob28/vsob28_subs.pgn"
+  subcommand combine $debug -- "$in1" "$in2"
 }
 
 command_ensure_environment() {
@@ -135,7 +137,7 @@ command_combine() {
 # │ 𝑓 Functional         │
 # ╰──────────────────────╯
 # ╭──────────────────────╮
-# │ 🖹 Help strings       │
+# │ 🖹 Help strings      │
 # ╰──────────────────────╯
 declare -r ensure_environment_help_string='Create venv if missing'
 declare -r combine_help_string='Generate combined PGN
@@ -162,5 +164,7 @@ OPTIONS
 # ⌂ Transition to provided command
 subcommand "${@}"
 # ╭──────────────────────╮
-# │ 🕮  Documentation     │
+# │ 🕮  Documentation    │
 # ╰──────────────────────╯
+
+# vim: shiftwidth=4 indentwidth=4 softtabstop=4

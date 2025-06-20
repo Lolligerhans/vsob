@@ -28,6 +28,9 @@ with open("combined_output.pgn", "w") as fp_out:
 
         # When no { is found there is no author
         index = word_split.index("{") if "{" in word_split else -1
+        # Cannot be followed by a name if last word
+        if index == len(word_split): index = -1
+        # BUG: Does not allow for multi-word names
         author = word_split[index + 1] if index != -1 else "unknown_author"
         if author not in author_dict.keys():
             author_dict[author] = author_no
