@@ -62,11 +62,11 @@ numbers.
 
 1. Line numbers are formatted to make them sort correctly lexicographically. Long
 enough that all values start with digit 0, resulting in `#0` at the start.
-1. Names are grepped to be between the first `{` and the non-ASCII character `—`. Conversion to lower case ensures consistent sorting between different upper/lower case spellings of the same names.
+1. Names are grepped to be between the first `{` and the non-ASCII character `—` (or `}` as fallback for the special case `{ Unknown }`). Conversion to lower case ensures consistent sorting between different upper/lower case spellings of the same names.
 1. Game numbers grep for `#0` from line numbers.
 
 ```vim
 :%s/^/\=printf('#%04d', line('.')).' ┃ '/
-:%s/^.\{-}{ \(.\{-}\) —.*$/\L\1\E ┃ \0/
+:%s/^.\{-}{ \(.\{-}\) \%(—\|}\).*$/\L\1\E ┃ \0/
 :%s/\#0*\(\d\{-}\) \zs/\=printf('(♚ %04d ♔ %04d) ', submatch(1) * 2 - 1, submatch(1) * 2)/
 ```
