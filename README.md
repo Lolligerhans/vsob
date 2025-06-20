@@ -84,7 +84,7 @@ Relevant structure
     - Always contains the name
         - The name does not contain the special dash `—`
         - The name does not contain closing curly brace `}`
-    - Begins with one of
+    - After joining lines, begins with one of
         - Regular pattern `{ John Doe —` (note the special not-ASCII dash `—`)
         - Special case when name is not known `{ John Doe }` (when the name is `Unknown`)
 
