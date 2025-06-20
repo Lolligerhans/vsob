@@ -11,6 +11,8 @@ import chess.pgn
 # https://python-chess.readthedocs.io/en/latest/pgn.html
 pgn = open("combined_input.pgn")
 
+# Games are counted as millions. The low decimals encode the author number. The
+# 3rd author having 21 openings becomes 21'000'003.
 MAX_GAMES = 1000000
 split_str = '[Event "'
 with open("combined_output.pgn", "w") as fp_out:
@@ -26,9 +28,7 @@ with open("combined_output.pgn", "w") as fp_out:
 
         # When no { is found there is no author
         index = word_split.index("{") if "{" in word_split else -1
-        author = (
-            word_split[word_split.index("{") + 1] if index != -1 else "unknown_author"
-        )
+        author = word_split[index + 1] if index != -1 else "unknown_author"
         if author not in author_dict.keys():
             author_dict[author] = author_no
             author_no += 1
