@@ -91,7 +91,7 @@ Relevant structure
 ## Processing steps
 
 1. Remove empty lines
-2. Join games into single lines
+1. Join games into single lines
 1. Remove PGN metadata for readability
 1. Add data into greppable columns at the start of each line
 
