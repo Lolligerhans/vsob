@@ -14,7 +14,7 @@ pgn = open("combined_input.pgn")
 # Games are counted as millions. The low decimals encode the author number. The
 # 3rd author having 21 openings becomes 21'000'003.
 MAX_GAMES = 1000000
-split_str = '[Event "'
+
 with open("combined_output.pgn", "w") as fp_out:
     author_dict = {}
     author_no = 0
