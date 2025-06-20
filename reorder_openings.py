@@ -17,7 +17,6 @@ MAX_GAMES = 1000000
 
 with open("combined_output.pgn", "w") as fp_out:
     author_dict = {}
-    author_no = 0
     game_lst = []
     while True:
         game_obj = chess.pgn.read_game(pgn)
@@ -33,8 +32,7 @@ with open("combined_output.pgn", "w") as fp_out:
         # BUG: Does not allow for multi-word names
         author = word_split[index + 1] if index != -1 else "unknown_author"
         if author not in author_dict.keys():
-            author_dict[author] = author_no
-            author_no += 1
+            author_dict[author] = len(author_dict.keys())
         else:
             author_dict[author] += MAX_GAMES
         key = author_dict[author]
