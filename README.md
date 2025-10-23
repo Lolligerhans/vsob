@@ -10,7 +10,10 @@
     - [Remove empty lines](#remove-empty-lines)
     - [Join lines](#join-lines)
     - [Remove metadata](#remove-metadata)
+    - [Format move notation](#format-move-notation)
     - [Add data columns](#add-data-columns)
+    - [Sort](#sort)
+    - [Misc](#misc)
 <!--toc:end-->
 
 ## PGN data format
