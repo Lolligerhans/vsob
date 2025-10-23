@@ -139,11 +139,19 @@ Prepend author names. Prepend the line number. Convert line numbers into game
 numbers. Use the grep-able non-ASCII character `┃` (digraph `VV`) as delimiter.
 
 1. Line numbers are formatted to make them sort correctly lexicographically.
-1. Names are grepped to be between the first `{` and the non-ASCII character `—` (or `}` as fallback for the special case `{ Unknown }`). Conversion to lower case ensures consistent sorting between different upper/lower case spellings of the same names.
 1. Game numbers grep for `#[[:digit:]]*` (line numbers), but drop leading `0`s.
+1. Length of book line (whole moves).
+1. Names are grepped to be between the first `{` and the non-ASCII character `—` (or `}` as fallback for the special case `{ Unknown }`). Conversion to lower case ensures consistent sorting between different upper/lower case spellings of the same names.
+
+> [!NOTE]
+> The game numbering need to be done before sorting. It uses the text line
+> number.
 
 ```vim
 :%s/^/\=printf('#%04d', line('.')).' ┃ '/
-:%s/^.\{-}{\s*\(.\{-}\)\s*\%(—\|}\).*$/\L\1\E ┃ \0/
 :%s/\#0*\(\d\{-}\) \zs/\=printf('(♚ %04d ♔ %04d) ', submatch(1) * 2 - 1, submatch(1) * 2)/
+" Grep for last '\d\.' followed by '{'
+:%s/^\ze.*\<\(\d\+\)\..\{-}{/[\1] ┃ /
+:%s/^.\{-}{\s*\(.\{-}\)\s*\%(—\|}\).*$/\L\1\E ┃ \0/
 ```
+
