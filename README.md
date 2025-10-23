@@ -93,7 +93,7 @@ Relevant structure
 1. Remove empty lines
 1. Join games into single lines
 1. Remove PGN metadata for readability
-1. Add data into greppable columns at the start of each line
+1. Add data into grep-able columns at the start of each line
 
 > [!TIP]
 > Below are (n)vim commands. Yank line into `"0` by `yy` and apply with `@0`.
