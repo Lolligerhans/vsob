@@ -155,3 +155,26 @@ numbers. Use the grep-able non-ASCII character `┃` (digraph `VV`) as delimiter
 :%s/^.\{-}{\s*\(.\{-}\)\s*\%(—\|}\).*$/\L\1\E ┃ \0/
 ```
 
+### Sort
+
+> [!TIP]
+> Sort when the intended criterion is at the beginning of the line, or use
+> a pattern anchoring at non-ASCII '┃'.
+
+```vim
+:sort
+" Sort by book line when not the first segment.
+:sort i /┃ 1\./
+" Sort by book length when not the first segment.
+:sort! n /┃ \[/
+```
+
+### Misc
+
+```vim
+" Move last segment to front
+:%s/\(.*\)┃ \(.*\)/\2 ┃ \1
+```
+
+<!-- Maybe useful later -->
+<!-- :s/\w\+/\=len(submatch(0))/g -->
