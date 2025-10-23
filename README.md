@@ -135,6 +135,6 @@ numbers. Use the greppable non-ASCII character `┃` as delimiter.
 
 ```vim
 :%s/^/\=printf('#%04d', line('.')).' ┃ '/
-:%s/^.\{-}{ \(.\{-}\) \%(—\|}\).*$/\L\1\E ┃ \0/
+:%s/^.\{-}{\s*\(.\{-}\)\s*\%(—\|}\).*$/\L\1\E ┃ \0/
 :%s/\#0*\(\d\{-}\) \zs/\=printf('(♚ %04d ♔ %04d) ', submatch(1) * 2 - 1, submatch(1) * 2)/
 ```
