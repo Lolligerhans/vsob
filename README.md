@@ -98,7 +98,9 @@ Relevant structure
 1. Remove empty lines
 1. Join games into single lines
 1. Remove PGN metadata for readability
+1. Format spaces in move notation
 1. Add data into grep-able columns at the start of each line
+1. Sort
 
 > [!TIP]
 > Below are (n)vim commands. Yank line into `"0` by `yy` and apply with `@0`.
@@ -129,7 +131,7 @@ Add a single empty line at the end beforehand.
 :v/^1\./p
 ```
 
-### Format move notation
+### Normalize spaces in move notation
 
 Only needed when intending to sort on moves.
 
