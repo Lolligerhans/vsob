@@ -87,6 +87,8 @@ Relevant structure
     - After joining lines, begins with one of
         - Regular pattern `{ JohnDoe —` (note the special not-ASCII dash `—`)
         - Special case when name is not known `{ JohnDoe }` (when the name is `Unknown`)
+1. PGN moves
+    - Move numbering matches pattern `/[[:digit:]]\+\./`
 
 ## Processing steps
 
