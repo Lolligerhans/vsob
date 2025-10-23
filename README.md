@@ -85,8 +85,8 @@ Relevant structure
         - The name does not contain the special dash `—`
         - The name does not contain closing curly brace `}`
     - After joining lines, begins with one of
-        - Regular pattern `{ John Doe —` (note the special not-ASCII dash `—`)
-        - Special case when name is not known `{ John Doe }` (when the name is `Unknown`)
+        - Regular pattern `{ JohnDoe —` (note the special not-ASCII dash `—`)
+        - Special case when name is not known `{ JohnDoe }` (when the name is `Unknown`)
 
 ## Processing steps
 
@@ -127,7 +127,7 @@ Add a single empty line at the end beforehand.
 ### Add data columns
 
 Prepend the line number. Prepend author names. Convert line numbers into game
-numbers. Use the greppable non-ASCII character `┃` as delimiter.
+numbers. Use the grep-able non-ASCII character `┃` as delimiter.
 
 1. Line numbers are formatted to make them sort correctly lexicographically.
 1. Names are grepped to be between the first `{` and the non-ASCII character `—` (or `}` as fallback for the special case `{ Unknown }`). Conversion to lower case ensures consistent sorting between different upper/lower case spellings of the same names.
