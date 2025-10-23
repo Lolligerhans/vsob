@@ -124,6 +124,15 @@ Add a single empty line at the end beforehand.
 :v/^1\./p
 ```
 
+### Format move notation
+
+Only needed when intending to sort on moves.
+
+```vim
+" Use single whitespace after move number
+:%s/\d\.\zs\s*/ /g
+```
+
 ### Add data columns
 
 Prepend the line number. Prepend author names. Convert line numbers into game
