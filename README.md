@@ -135,8 +135,8 @@ Only needed when intending to sort on moves.
 
 ### Add data columns
 
-Prepend the line number. Prepend author names. Convert line numbers into game
-numbers. Use the grep-able non-ASCII character `┃` as delimiter.
+Prepend author names. Prepend the line number. Convert line numbers into game
+numbers. Use the grep-able non-ASCII character `┃` (digraph `VV`) as delimiter.
 
 1. Line numbers are formatted to make them sort correctly lexicographically.
 1. Names are grepped to be between the first `{` and the non-ASCII character `—` (or `}` as fallback for the special case `{ Unknown }`). Conversion to lower case ensures consistent sorting between different upper/lower case spellings of the same names.
