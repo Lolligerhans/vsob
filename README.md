@@ -10,7 +10,7 @@
     - [Remove empty lines](#remove-empty-lines)
     - [Join lines](#join-lines)
     - [Remove metadata](#remove-metadata)
-    - [Format move notation](#format-move-notation)
+    - [Normalize spaces in move notation](#normalize-spaces-in-move-notation)
     - [Add data columns](#add-data-columns)
     - [Sort](#sort)
     - [Misc](#misc)
